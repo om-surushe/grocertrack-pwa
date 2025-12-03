@@ -4,6 +4,7 @@ const urlsToCache = [
   '/index.html',
   '/index.tsx',
   '/manifest.json',
+  '/logo.svg',
   'https://cdn.tailwindcss.com'
 ];
 
