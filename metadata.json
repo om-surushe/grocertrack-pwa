@@ -1,0 +1,5 @@
+{
+  "name": "GrocerTrack",
+  "description": "A minimalist, offline-first mobile grocery shopping tracker with smart calculation features.",
+  "requestFramePermissions": []
+}
