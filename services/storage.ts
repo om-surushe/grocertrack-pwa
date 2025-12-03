@@ -14,7 +14,23 @@ export const saveShopGroups = (groups: ShopGroup[]) => {
 export const loadShopGroups = (): ShopGroup[] => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    if (!data) return [];
+    
+    const groups = JSON.parse(data);
+    
+    // Migration: amount -> quantity
+    // Iterate through groups and items to ensure old data works with new code
+    return groups.map((g: any) => ({
+      ...g,
+      items: (g.items || []).map((i: any) => {
+        // If old 'amount' exists but new 'quantity' doesn't, migrate it
+        if (i.amount !== undefined && i.quantity === undefined) {
+           i.quantity = i.amount;
+           delete i.amount;
+        }
+        return i;
+      })
+    }));
   } catch (e) {
     console.error('Failed to load data', e);
     return [];

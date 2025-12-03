@@ -13,7 +13,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
   const [unitType, setUnitType] = useState<UnitType>(item.unitType);
   
   const [price, setPrice] = useState(item.pricePerUnit);
-  const [amount, setAmount] = useState(item.amount);
+  const [quantity, setQuantity] = useState(item.quantity);
   const [total, setTotal] = useState(item.totalPaid);
 
   const [hasError, setHasError] = useState(false);
@@ -22,9 +22,9 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
     setName(item.name);
     setUnitType(item.unitType);
     setPrice(item.pricePerUnit);
-    setAmount(item.amount);
+    setQuantity(item.quantity);
     setTotal(item.totalPaid);
-  }, [item.id, item.name, item.unitType, item.pricePerUnit, item.amount, item.totalPaid]);
+  }, [item.id, item.name, item.unitType, item.pricePerUnit, item.quantity, item.totalPaid]);
 
   const fmt = (num: number) => {
     if (isNaN(num) || !isFinite(num)) return "";
@@ -33,15 +33,15 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
 
   const handleManualCalculate = () => {
     const p = parseFloat(price);
-    const a = parseFloat(amount);
+    const q = parseFloat(quantity);
     const t = parseFloat(total);
 
     const isP = !isNaN(p) && isFinite(p) && p > 0;
-    const isA = !isNaN(a) && isFinite(a) && a > 0;
+    const isQ = !isNaN(q) && isFinite(q) && q > 0;
     const isT = !isNaN(t) && isFinite(t) && t > 0;
 
     // Validation: Need at least 2 non-zero values
-    const validCount = (isP ? 1 : 0) + (isA ? 1 : 0) + (isT ? 1 : 0);
+    const validCount = (isP ? 1 : 0) + (isQ ? 1 : 0) + (isT ? 1 : 0);
 
     if (validCount < 2) {
       setHasError(true);
@@ -56,40 +56,40 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
     const updates: Partial<ShopItem> = {};
 
     // Logic: Determine what to calculate based on what is missing or present
-    if (isP && isA && !isT) {
-       // Price & Amount -> Calc Total
-       const newTotal = fmt(p * a);
+    if (isP && isQ && !isT) {
+       // Price & Quantity -> Calc Total
+       const newTotal = fmt(p * q);
        setTotal(newTotal);
        updates.totalPaid = newTotal;
-    } else if (isT && isP && !isA) {
-       // Total & Price -> Calc Amount
-       const newAmount = fmt(t / p);
-       setAmount(newAmount);
-       updates.amount = newAmount;
-    } else if (isT && isA && !isP) {
-       // Total & Amount -> Calc Price
-       const newPrice = fmt(t / a);
+    } else if (isT && isP && !isQ) {
+       // Total & Price -> Calc Quantity
+       const newQuantity = fmt(t / p);
+       setQuantity(newQuantity);
+       updates.quantity = newQuantity;
+    } else if (isT && isQ && !isP) {
+       // Total & Quantity -> Calc Price
+       const newPrice = fmt(t / q);
        setPrice(newPrice);
        updates.pricePerUnit = newPrice;
     } else {
        // Fallback / Recalculation Case:
        // If all 3 are present, or some specific combo that fell through:
-       // Standard behavior is to re-calculate Total if P and A are present.
-       if (isP && isA) {
-         const newTotal = fmt(p * a);
+       // Standard behavior is to re-calculate Total if P and Q are present.
+       if (isP && isQ) {
+         const newTotal = fmt(p * q);
          setTotal(newTotal);
          updates.totalPaid = newTotal;
        } else if (isT && isP) {
-          const newAmount = fmt(t / p);
-          setAmount(newAmount);
-          updates.amount = newAmount;
+          const newQuantity = fmt(t / p);
+          setQuantity(newQuantity);
+          updates.quantity = newQuantity;
        }
     }
 
     onUpdate(item.id, updates);
   };
 
-  const handleInputChange = (field: 'price'|'amount'|'total', val: string) => {
+  const handleInputChange = (field: 'price'|'quantity'|'total', val: string) => {
     // Prevent negative numbers
     if (val.startsWith('-')) return;
     
@@ -99,9 +99,9 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
     if (field === 'price') {
       setPrice(val);
       updates.pricePerUnit = val;
-    } else if (field === 'amount') {
-      setAmount(val);
-      updates.amount = val;
+    } else if (field === 'quantity') {
+      setQuantity(val);
+      updates.quantity = val;
     } else {
       setTotal(val);
       updates.totalPaid = val;
@@ -180,13 +180,13 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
 
           <div className="flex flex-col">
             <label className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
-              Amount
+              Quantity
             </label>
             <input
               type="number"
               inputMode="decimal"
-              value={amount}
-              onChange={(e) => handleInputChange('amount', e.target.value)}
+              value={quantity}
+              onChange={(e) => handleInputChange('quantity', e.target.value)}
               placeholder="0"
               className={currentInputClass}
             />

@@ -22,7 +22,7 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
       name: '',
       unitType: 'kg',
       pricePerUnit: '',
-      amount: '',
+      quantity: '',
       totalPaid: '',
       isCompleted: false,
       timestamp: Date.now(),

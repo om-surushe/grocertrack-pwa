@@ -7,7 +7,7 @@ export interface ShopItem {
   // We store as strings to handle empty states gracefully in inputs
   // but they represent numeric values
   pricePerUnit: string; 
-  amount: string;
+  quantity: string; // Renamed from amount
   totalPaid: string;
   isCompleted: boolean;
   timestamp: number;
