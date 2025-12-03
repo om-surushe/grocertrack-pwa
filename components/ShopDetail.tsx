@@ -30,7 +30,8 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
     onUpdateGroup({
       ...group,
       updatedAt: Date.now(),
-      items: [...group.items, newItem]
+      // Prepend the new item so it appears at the top
+      items: [newItem, ...group.items]
     });
   };
 
@@ -68,8 +69,8 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
 
   return (
     <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
+      {/* Header */}
+      <div className="shrink-0 z-10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
         <button 
           onClick={onBack}
           className="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
@@ -92,8 +93,8 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
         </button>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4 pb-32 no-scrollbar">
+      {/* Content - Grows to fill space */}
+      <div className="flex-1 overflow-y-auto p-4 no-scrollbar">
         {group.items.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-gray-400 mt-10">
             <ShoppingBagIcon className="w-16 h-16 mb-4 opacity-20" />
@@ -112,10 +113,10 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
         )}
       </div>
 
-      {/* Sticky Bottom Summary & FAB */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-50 via-gray-50 to-transparent dark:from-gray-950 dark:via-gray-950 pointer-events-none">
-        <div className="flex items-center justify-between gap-4 pointer-events-auto max-w-md mx-auto">
-          <div className="bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 rounded-2xl px-5 py-3 flex-1 flex flex-col">
+      {/* Footer - Pushed to bottom of flex container */}
+      <div className="shrink-0 p-4 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-20">
+        <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
+          <div className="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl px-5 py-3 flex-1 flex flex-col">
             <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-bold">Subtotal</span>
             <span className="text-2xl font-bold text-primary">₹{calculateSubtotal().toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
