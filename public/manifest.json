@@ -3,12 +3,12 @@
   "name": "GrocerTrack Shopping List",
   "icons": [
     {
-      "src": "https://picsum.photos/192/192",
+      "src": "https://cdn-icons-png.flaticon.com/512/1261/1261106.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://picsum.photos/512/512",
+      "src": "https://cdn-icons-png.flaticon.com/512/1261/1261106.png",
       "type": "image/png",
       "sizes": "512x512"
     }
