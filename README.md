@@ -8,6 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
+[![CI](https://github.com/om-surushe/grocertrack-pwa/actions/workflows/ci.yml/badge.svg)](https://github.com/om-surushe/grocertrack-pwa/actions/workflows/ci.yml)
 
 [**Live Demo →**](https://grocertrack.vercel.app/)
 
