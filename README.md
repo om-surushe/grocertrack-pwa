@@ -1,20 +1,72 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+
+# GrocerTrack
+
+**A minimal, installable shopping list PWA**
+
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
+
+[**Live Demo →**](https://grocertrack.vercel.app/)
+
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+## ✨ Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1o-pjkfRM-Lwailyry2pz80Vz0jV8yTWz
+- 📱 **Installable** — Add to home screen for a native app experience
+- 🌙 **Dark Mode** — Auto-detects system preference
+- 💾 **Offline Ready** — All data stored locally in browser
+- ⚡ **Fast & Lightweight** — No backend, no accounts, just lists
 
-## Run Locally
+## 📸 Screenshot
 
-**Prerequisites:**  Node.js
+<div align="center">
+<img src="./assets/screenshot-light.png" alt="GrocerTrack App" width="400" />
+</div>
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+
+## 🛠 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | React 19 |
+| Language | TypeScript 5.8 |
+| Build Tool | Vite 6 |
+| Storage | localStorage |
+| Hosting | Vercel |
+
+## 🚀 Getting Started
+
+**Prerequisites:** Node.js 18+
+
+```bash
+# Clone the repo
+git clone https://github.com/om-surushe/grocertrack-pwa.git
+cd grocertrack-pwa
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 📦 Build
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+<div align="center">
+Made with ☕ by <a href="https://github.com/om-surushe">Om Surushe</a>
+</div>
