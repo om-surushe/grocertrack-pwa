@@ -24,7 +24,6 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
       pricePerUnit: '',
       quantity: '',
       totalPaid: '',
-      isCompleted: false,
       timestamp: Date.now(),
     };
     onUpdateGroup({

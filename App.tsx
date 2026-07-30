@@ -12,9 +12,6 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('LIST');
   const [activeGroupId, setActiveGroupId] = useState<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  
-  // PWA Install Prompt State
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   // Initialization
   useEffect(() => {
@@ -28,19 +25,6 @@ const App: React.FC = () => {
       setTheme('dark');
     }
 
-    // Capture PWA install prompt event
-    const handleBeforeInstallPrompt = (e: any) => {
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later.
-      setDeferredPrompt(e);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
   }, []);
 
   // Persistence Effects
@@ -87,21 +71,6 @@ const App: React.FC = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    
-    // Show the install prompt
-    deferredPrompt.prompt();
-    
-    // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    // We've used the prompt, and can't use it again, throw it away
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
-    }
-  };
-
   // View Logic
   const activeGroup = groups.find(g => g.id === activeGroupId);
 
@@ -117,8 +86,6 @@ const App: React.FC = () => {
           onCreateGroup={handleCreateGroup}
           theme={theme}
           onToggleTheme={toggleTheme}
-          installPromptAvailable={!!deferredPrompt}
-          onInstallClick={handleInstallClick}
         />
       ) : activeGroup ? (
         <ShopDetail 

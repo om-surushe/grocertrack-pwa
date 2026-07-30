@@ -9,7 +9,6 @@ export interface ShopItem {
   pricePerUnit: string; 
   quantity: string; // Renamed from amount
   totalPaid: string;
-  isCompleted: boolean;
   timestamp: number;
 }
 

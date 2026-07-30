@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShopGroup } from '../types';
-import { PlusIcon, ShoppingBagIcon, SunIcon, MoonIcon, DownloadIcon } from './Icons';
+import { PlusIcon, ShoppingBagIcon, SunIcon, MoonIcon } from './Icons';
 
 interface ShopListProps {
   groups: ShopGroup[];
@@ -8,18 +8,14 @@ interface ShopListProps {
   onCreateGroup: (name: string) => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
-  installPromptAvailable: boolean;
-  onInstallClick: () => void;
 }
 
 const ShopList: React.FC<ShopListProps> = ({ 
   groups, 
   onSelectGroup, 
   onCreateGroup, 
-  theme, 
+  theme,
   onToggleTheme,
-  installPromptAvailable,
-  onInstallClick 
 }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [newShopName, setNewShopName] = useState('');
@@ -45,16 +41,6 @@ const ShopList: React.FC<ShopListProps> = ({
           GrocerTrack
         </h1>
         <div className="flex gap-2">
-          {installPromptAvailable && (
-            <button 
-              onClick={onInstallClick}
-              className="flex items-center gap-1 px-3 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-medium text-sm"
-              title="Install App"
-            >
-              <DownloadIcon className="w-4 h-4" />
-              <span className="hidden sm:inline">Install</span>
-            </button>
-          )}
           <button 
             onClick={onToggleTheme}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors"

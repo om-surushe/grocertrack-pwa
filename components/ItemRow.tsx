@@ -122,11 +122,7 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
   const currentInputClass = `${inputBaseClass} ${hasError ? inputErrorClass : inputNormalClass}`;
 
   return (
-    <div className={`p-4 mb-3 rounded-xl border shadow-sm transition-all ${
-      item.isCompleted 
-        ? 'bg-gray-50 dark:bg-gray-800/50 border-gray-100 dark:border-gray-800 opacity-70' 
-        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-    }`}>
+    <div className="p-4 mb-3 rounded-xl border shadow-sm transition-all bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
       
       {/* Header Row: Name & Unit Toggle */}
       <div className="flex justify-between items-start mb-3 gap-2">

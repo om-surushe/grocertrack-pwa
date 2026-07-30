@@ -1,5 +1,5 @@
 {
   "name": "GrocerTrack",
-  "description": "A minimalist, offline-first mobile grocery shopping tracker with smart calculation features.",
+  "description": "A browser-based grocery list with unit-price calculations and local storage.",
   "requestFramePermissions": []
 }

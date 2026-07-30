@@ -2,88 +2,56 @@
 
 # GrocerTrack
 
-**A minimal, installable shopping list PWA**
+A browser-based grocery list for tracking quantities, unit prices, and totals.
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
-[![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
-[![CI](https://github.com/om-surushe/grocertrack-pwa/actions/workflows/ci.yml/badge.svg)](https://github.com/om-surushe/grocertrack-pwa/actions/workflows/ci.yml)
+[![CI](https://github.com/om-surushe/grocertrack/actions/workflows/ci.yml/badge.svg)](https://github.com/om-surushe/grocertrack/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[**Live Demo →**](https://grocertrack.vercel.app/)
+[Live demo](https://grocertrack.vercel.app/)
 
 </div>
 
----
+<p align="center"><img src="./assets/screenshot-light.png" alt="GrocerTrack shopping list" width="400" /></p>
 
-## ✨ Features
+## What it does
 
-- 📱 **Installable** — Add to home screen for a native app experience
-- 🌙 **Dark Mode** — Auto-detects system preference
-- 💾 **Offline Ready** — All data stored locally in browser
-- ⚡ **Fast & Lightweight** — No backend, no accounts, just lists
+- Keeps separate shopping lists in the current browser.
+- Calculates price, quantity, or total when the other two values are entered.
+- Supports kilograms, litres, and item counts.
+- Shows a subtotal for each list.
+- Stores lists and theme preference in `localStorage`.
+- Follows the system colour scheme and supports manual light/dark switching.
 
-## 📸 Screenshot
+> GrocerTrack has no account or server-side sync. Clearing browser storage removes the saved lists.
 
-<div align="center">
-<img src="./assets/screenshot-light.png" alt="GrocerTrack App" width="400" />
-</div>
+## Run locally
 
-
-
-## 🛠 Tech Stack
-
-| Category | Technology |
-|----------|------------|
-| Framework | React 19 |
-| Language | TypeScript 5.8 |
-| Build Tool | Vite 6 |
-| Storage | localStorage |
-| Hosting | Vercel |
-
-## 🚀 Getting Started
-
-**Prerequisites:** Node.js 18+
+Requires Node.js 20 or later.
 
 ```bash
-# Clone the repo
-git clone https://github.com/om-surushe/grocertrack-pwa.git
-cd grocertrack-pwa
-
-# Install dependencies
-npm install
-
-# Start dev server
+git clone https://github.com/om-surushe/grocertrack.git
+cd grocertrack
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Vite serves the application at `http://localhost:3000`.
 
-## 📦 Build
+## Validate a change
 
 ```bash
+npm run typecheck
 npm run build
-npm run preview
 ```
 
----
+## Stack
 
-## 🤝 Contributing
+- React 19
+- TypeScript 5.8
+- Vite 6
+- Tailwind CSS browser build
+- Browser `localStorage`
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+## License
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/awesome-feature`)
-3. Commit your changes (`git commit -m 'feat: add awesome feature'`)
-4. Push to the branch (`git push origin feature/awesome-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the [MIT License](./LICENSE).
-
----
-
-<div align="center">
-Made with ☕ by <a href="https://github.com/om-surushe">Om Surushe</a>
-</div>
+[MIT](LICENSE) © Om Surushe

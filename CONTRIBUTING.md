@@ -1,35 +1,11 @@
-# Contributing to GrocerTrack
+# Contributing
 
-Thanks for your interest in contributing! 🎉
-
-## How to Contribute
-
-1. **Fork** the repository
-2. **Clone** your fork locally
-3. **Create a branch** for your feature or fix:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-4. **Make your changes** and test locally
-5. **Commit** with a descriptive message:
-   ```bash
-   git commit -m "feat: add your feature"
-   ```
-6. **Push** to your fork and open a **Pull Request**
-
-## Development Setup
+Keep changes focused and preserve the browser-only data model.
 
 ```bash
-npm install
-npm run dev
+npm ci
+npm run typecheck
+npm run build
 ```
 
-## Code Style
-
-- Use TypeScript
-- Follow existing patterns in the codebase
-- Keep components small and focused
-
-## Questions?
-
-Open an issue and we'll help you out!
+Describe the behaviour changed and the checks you ran in the pull request. Do not commit build output, environment files, or unrelated formatting changes.

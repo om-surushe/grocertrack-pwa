@@ -19,10 +19,10 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       
       - name: Type check
-        run: npx tsc --noEmit
+        run: npm run typecheck
       
       - name: Build
         run: npm run build
