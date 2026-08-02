@@ -4,7 +4,9 @@ Keep changes focused and preserve the browser-only data model.
 
 ```bash
 npm ci
+npm audit --audit-level=high
 npm run typecheck
+npm test
 npm run build
 ```
 
