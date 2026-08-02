@@ -40,7 +40,9 @@ Vite serves the application at `http://localhost:3000`.
 ## Validate a change
 
 ```bash
+npm audit --audit-level=high
 npm run typecheck
+npm test
 npm run build
 ```
 
@@ -49,8 +51,12 @@ npm run build
 - React 19
 - TypeScript 5.8
 - Vite 6
-- Tailwind CSS browser build
+- Tailwind CSS 4, compiled during the Vite build
 - Browser `localStorage`
+
+## Security
+
+Shopping data stays in the current browser profile. See [SECURITY.md](SECURITY.md) for private vulnerability reporting and local-data limitations.
 
 ## License
 

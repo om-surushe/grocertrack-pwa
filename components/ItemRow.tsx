@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShopItem, UnitType } from '../types';
 import { TrashIcon, CalculatorIcon } from './Icons';
+import { calculateMissingValue } from '../services/calculator';
 
 interface ItemRowProps {
   item: ShopItem;
@@ -26,67 +27,23 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
     setTotal(item.totalPaid);
   }, [item.id, item.name, item.unitType, item.pricePerUnit, item.quantity, item.totalPaid]);
 
-  const fmt = (num: number) => {
-    if (isNaN(num) || !isFinite(num)) return "";
-    return parseFloat(num.toFixed(3)).toString();
-  };
-
   const handleManualCalculate = () => {
-    const p = parseFloat(price);
-    const q = parseFloat(quantity);
-    const t = parseFloat(total);
+    const result = calculateMissingValue({
+      pricePerUnit: price,
+      quantity,
+      totalPaid: total,
+    });
 
-    const isP = !isNaN(p) && isFinite(p) && p > 0;
-    const isQ = !isNaN(q) && isFinite(q) && q > 0;
-    const isT = !isNaN(t) && isFinite(t) && t > 0;
-
-    // Validation: Need at least 2 non-zero values
-    const validCount = (isP ? 1 : 0) + (isQ ? 1 : 0) + (isT ? 1 : 0);
-
-    if (validCount < 2) {
-      setHasError(true);
-      // Haptic feedback for mobile
-      if (typeof navigator !== 'undefined' && navigator.vibrate) {
-        navigator.vibrate(200);
-      }
+    setHasError(result.error);
+    if (result.error) {
+      navigator.vibrate?.(200);
       return;
     }
 
-    setHasError(false);
-    const updates: Partial<ShopItem> = {};
-
-    // Logic: Determine what to calculate based on what is missing or present
-    if (isP && isQ && !isT) {
-       // Price & Quantity -> Calc Total
-       const newTotal = fmt(p * q);
-       setTotal(newTotal);
-       updates.totalPaid = newTotal;
-    } else if (isT && isP && !isQ) {
-       // Total & Price -> Calc Quantity
-       const newQuantity = fmt(t / p);
-       setQuantity(newQuantity);
-       updates.quantity = newQuantity;
-    } else if (isT && isQ && !isP) {
-       // Total & Quantity -> Calc Price
-       const newPrice = fmt(t / q);
-       setPrice(newPrice);
-       updates.pricePerUnit = newPrice;
-    } else {
-       // Fallback / Recalculation Case:
-       // If all 3 are present, or some specific combo that fell through:
-       // Standard behavior is to re-calculate Total if P and Q are present.
-       if (isP && isQ) {
-         const newTotal = fmt(p * q);
-         setTotal(newTotal);
-         updates.totalPaid = newTotal;
-       } else if (isT && isP) {
-          const newQuantity = fmt(t / p);
-          setQuantity(newQuantity);
-          updates.quantity = newQuantity;
-       }
-    }
-
-    onUpdate(item.id, updates);
+    if (result.updates.pricePerUnit !== undefined) setPrice(result.updates.pricePerUnit);
+    if (result.updates.quantity !== undefined) setQuantity(result.updates.quantity);
+    if (result.updates.totalPaid !== undefined) setTotal(result.updates.totalPaid);
+    onUpdate(item.id, result.updates);
   };
 
   const handleInputChange = (field: 'price'|'quantity'|'total', val: string) => {
@@ -134,13 +91,17 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
             onUpdate(item.id, { name: e.target.value });
           }}
           placeholder="Item name (e.g. Potato)"
+          aria-label="Item name"
           className="flex-1 bg-transparent font-medium text-lg placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none text-gray-900 dark:text-gray-100"
         />
         
         <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-0.5 shrink-0">
           {(['kg', 'liter', 'quantity'] as UnitType[]).map((u) => (
             <button
+              type="button"
               key={u}
+              aria-label={`Use ${u === 'quantity' ? 'pieces' : u}`}
+              aria-pressed={unitType === u}
               onClick={() => {
                 setUnitType(u);
                 onUpdate(item.id, { unitType: u });
@@ -161,10 +122,11 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
       <div className="flex items-end gap-2 mb-2">
         <div className="grid grid-cols-3 gap-2 flex-1">
           <div className="flex flex-col">
-            <label className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
+            <label htmlFor={`${item.id}-price`} className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
               Price/{unitLabels[unitType]}
             </label>
             <input
+              id={`${item.id}-price`}
               type="number"
               inputMode="decimal"
               value={price}
@@ -175,10 +137,11 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
+            <label htmlFor={`${item.id}-quantity`} className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
               Quantity
             </label>
             <input
+              id={`${item.id}-quantity`}
               type="number"
               inputMode="decimal"
               value={quantity}
@@ -189,10 +152,11 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[10px] uppercase tracking-wider text-primary font-bold mb-1">
+            <label htmlFor={`${item.id}-total`} className="text-[10px] uppercase tracking-wider text-primary font-bold mb-1">
               Total
             </label>
             <input
+              id={`${item.id}-total`}
               type="number"
               inputMode="decimal"
               value={total}
@@ -204,7 +168,9 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
         </div>
 
         <button
+            type="button"
             onClick={handleManualCalculate}
+            aria-label="Calculate missing value"
             className="mb-[1px] h-[38px] w-[38px] bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-colors flex items-center justify-center shrink-0 active:scale-95"
             title="Calculate missing value"
           >
@@ -213,15 +179,17 @@ const ItemRow: React.FC<ItemRowProps> = ({ item, onUpdate, onDelete }) => {
       </div>
 
       {hasError && (
-        <div className="text-red-500 text-xs mb-2 pl-1 animate-pulse">
+        <div role="alert" className="text-red-500 text-xs mb-2 pl-1 animate-pulse">
           Please enter at least 2 values to calculate.
         </div>
       )}
 
       {/* Actions */}
       <div className="flex justify-end gap-3 mt-2 border-t border-dashed border-gray-100 dark:border-gray-700 pt-2">
-        <button 
+        <button
+          type="button"
           onClick={() => onDelete(item.id)}
+          aria-label={`Delete ${item.name || 'item'}`}
           className="text-red-400 hover:text-red-500 p-1 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
         >
           <TrashIcon className="w-4 h-4" />

@@ -41,8 +41,10 @@ const ShopList: React.FC<ShopListProps> = ({
           GrocerTrack
         </h1>
         <div className="flex gap-2">
-          <button 
+          <button
+            type="button"
             onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors"
           >
             {theme === 'light' ? <MoonIcon className="w-5 h-5"/> : <SunIcon className="w-5 h-5"/>}
@@ -91,10 +93,12 @@ const ShopList: React.FC<ShopListProps> = ({
             const subtotal = group.items.reduce((acc, i) => acc + (parseFloat(i.totalPaid) || 0), 0);
             
             return (
-              <div 
+              <button
+                type="button"
                 key={group.id}
                 onClick={() => onSelectGroup(group)}
-                className="group bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-3 cursor-pointer hover:border-primary/50 dark:hover:border-primary/50 transition-all active:scale-[0.98]"
+                aria-label={`Open ${group.name}`}
+                className="group w-full text-left bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-3 cursor-pointer hover:border-primary/50 dark:hover:border-primary/50 transition-all active:scale-[0.98]"
               >
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-bold text-lg text-gray-800 dark:text-white group-hover:text-primary transition-colors">
@@ -112,7 +116,7 @@ const ShopList: React.FC<ShopListProps> = ({
                     ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
-              </div>
+              </button>
             );
           })
         )}
@@ -132,7 +136,9 @@ const ShopList: React.FC<ShopListProps> = ({
 
       {!isCreating && (
         <button
+          type="button"
           onClick={() => setIsCreating(true)}
+          aria-label="Create shopping list"
           className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:bg-primary/90 active:scale-95 transition-transform"
         >
           <PlusIcon className="w-8 h-8" />

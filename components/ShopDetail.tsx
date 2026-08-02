@@ -70,8 +70,10 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
     <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
       {/* Header */}
       <div className="shrink-0 z-10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
-        <button 
+        <button
+          type="button"
           onClick={onBack}
+          aria-label="Back to shopping lists"
           className="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
         >
           <ChevronLeftIcon className="w-6 h-6" />
@@ -84,8 +86,10 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
             {new Date(group.createdAt).toLocaleDateString()}
           </p>
         </div>
-        <button 
+        <button
+          type="button"
           onClick={confirmDelete}
+          aria-label={`Delete ${group.name}`}
           className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
         >
           <TrashIcon className="w-5 h-5" />
@@ -121,7 +125,9 @@ const ShopDetail: React.FC<ShopDetailProps> = ({ group, onBack, onUpdateGroup, o
           </div>
 
           <button
+            type="button"
             onClick={addItem}
+            aria-label="Add item"
             className="w-14 h-14 bg-primary text-white rounded-2xl shadow-lg shadow-primary/30 flex items-center justify-center active:scale-95 transition-transform hover:bg-primary/90"
           >
             <PlusIcon className="w-8 h-8" />
