@@ -4,7 +4,7 @@
 
 A browser-based grocery list for tracking quantities, unit prices, and totals.
 
-[![CI](https://github.com/om-surushe/grocertrack/actions/workflows/ci.yml/badge.svg)](https://github.com/om-surushe/grocertrack/actions/workflows/ci.yml)
+[![CI](https://github.com/om-surushe/GrocerTrack/actions/workflows/ci.yml/badge.svg)](https://github.com/om-surushe/GrocerTrack/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 [Live demo](https://grocertrack.vercel.app/)
@@ -29,7 +29,7 @@ A browser-based grocery list for tracking quantities, unit prices, and totals.
 Requires Node.js 20 or later.
 
 ```bash
-git clone https://github.com/om-surushe/grocertrack.git
+git clone https://github.com/om-surushe/GrocerTrack.git
 cd grocertrack
 npm ci
 npm run dev
